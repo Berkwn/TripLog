@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripLogServer.Domain", "TripLogServer.Domain\TripLogServer.Domain.csproj", "{2C04C374-7554-42B9-9720-D8B630FDEB1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C04C374-7554-42B9-9720-D8B630FDEB1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C04C374-7554-42B9-9720-D8B630FDEB1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C04C374-7554-42B9-9720-D8B630FDEB1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C04C374-7554-42B9-9720-D8B630FDEB1E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF5AD4A7-1147-40D2-8748-447C56317600}
+	EndGlobalSection
+EndGlobal
