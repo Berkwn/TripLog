@@ -5,6 +5,12 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripLogServer.Domain", "TripLogServer.Domain\TripLogServer.Domain.csproj", "{2C04C374-7554-42B9-9720-D8B630FDEB1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripLogServer.Infrastructure", "TripLogServer.Infrastructure\TripLogServer.Infrastructure.csproj", "{9C79CCAC-F6E7-46A2-BCAD-D0C3D3C2241C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripLogServer.Application", "TripLogServer.Application\TripLogServer.Application.csproj", "{EB89B66C-F76C-4970-BB07-11393C8577B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TripLogServer.WebAPI", "TripLogServer.WebAPI\TripLogServer.WebAPI.csproj", "{2CB1AEE4-F3E5-466D-B836-34C5BECED702}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{2C04C374-7554-42B9-9720-D8B630FDEB1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C04C374-7554-42B9-9720-D8B630FDEB1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C04C374-7554-42B9-9720-D8B630FDEB1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C79CCAC-F6E7-46A2-BCAD-D0C3D3C2241C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C79CCAC-F6E7-46A2-BCAD-D0C3D3C2241C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C79CCAC-F6E7-46A2-BCAD-D0C3D3C2241C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C79CCAC-F6E7-46A2-BCAD-D0C3D3C2241C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB89B66C-F76C-4970-BB07-11393C8577B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB89B66C-F76C-4970-BB07-11393C8577B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB89B66C-F76C-4970-BB07-11393C8577B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB89B66C-F76C-4970-BB07-11393C8577B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CB1AEE4-F3E5-466D-B836-34C5BECED702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB1AEE4-F3E5-466D-B836-34C5BECED702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB1AEE4-F3E5-466D-B836-34C5BECED702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB1AEE4-F3E5-466D-B836-34C5BECED702}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
