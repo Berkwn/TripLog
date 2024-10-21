@@ -1,0 +1,132 @@
+<nav style="border-radius: 10px;" class="navbar navbar-expand-lg bg-body-tertiary container  mt-3" data-bs-theme="dark">
+    <div class="container-fluid">
+        <i class="fa-solid fa-earth-americas fa-lg me-2" style="color: #ffffff;"></i>
+      <a class="navbar-brand" href="#">TRİP LOG</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        </ul>
+        <a  style="color :white" class="nav-link tripekle" href="#" data-bs-toggle="modal" data-bs-target="#addTrip">Gezi Ekle</a>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar Bitiş noktası -->
+
+  <!-- TRİP EKLEME MODALI BAŞLANGIÇ  -->
+  <div id="addTrip" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Başlığı</span>
+            <input id="TripTitle"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+          </div>
+
+          <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Metni</span>
+            <input id="TripText"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+          </div>
+
+          <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Tagleri</span>
+            <textarea id="TripTags" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" rows="4"></textarea>
+          </div>
+          
+
+          <div class="mb-3">
+            <input  class="form-control" type="file" id="formFile">
+          </div>
+
+          
+
+          <hr>
+          <div id="TripPhotos">
+
+
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button onclick="addTripPart()" style="margin-right: auto;" class="btn btn-success">Gezi Parçası Ekle</button>
+          <button onclick="cancelTrip()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+          <button onclick="createTrip()" type="button" class="btn btn-primary">KAYDET</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRİP EKLEME MODALI BİTİŞ -->
+
+   <!-- CARD EKLEME NOKTASI -->
+   <div id="CardContain" class="w-100  container mt-5">
+  <div class="card w-50 me-3">
+    <div style="justify-content: center; align-items: center;" class="card-body d-flex ">
+        <div class="image "></div>
+            <img src="./baca.jpeg" alt="">
+
+
+            
+        <div style="flex: 1; " class="ms-3">
+
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        </div>
+  
+    
+    </div>
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                DAHA FAZLASI İÇİN 
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse " data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+
+                <div id="carouselExample" class="carousel slide">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="./baca.jpeg" class="d-block w-100" alt="...">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./baca.jpeg" class="d-block w-100" alt="...">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                      </div>
+                      <div class="carousel-item">
+                        <img src="./baca.jpeg" class="d-block w-100" alt="...">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+
+              
+          </div>
+        </div>
+  </div>
+
+  <!-- CARD EKLEME NOKTASI BİTİŞ -->
+ 
+</div>
+</div>
+</div>
