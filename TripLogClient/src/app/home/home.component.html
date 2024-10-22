@@ -22,43 +22,43 @@
           <h5 class="modal-title">Modal title</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <form #addform="ngForm" (ngSubmit)="createTrip(addform)" class="form-group">
         <div class="modal-body">
+          
           <div class="input-group input-group-md mb-3">
             <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Başlığı</span>
-            <input id="TripTitle"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            <input [(ngModel)]="createTripModel.title " name="title" id="TripTitle"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
           </div>
 
           <div class="input-group input-group-md mb-3">
             <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Metni</span>
-            <input id="TripText"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            <input [(ngModel)]="createTripModel.description" title="description" name="TripText"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
           </div>
 
           <div class="input-group input-group-md mb-3">
             <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Tagleri</span>
-            <textarea id="TripTags" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" rows="4"></textarea>
+            <textarea [(ngModel)]="createTripModel.tags"  name="TripTags" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" rows="4"></textarea>
           </div>
           
 
           <div class="mb-3">
-            <input  class="form-control" type="file" id="formFile">
+            <input (change)="selectedImage($event)" name="images" class="form-control" type="file" id="formFile">
           </div>
-
-          
-
-          <hr>
           <div id="TripPhotos">
 
 
           </div>
 
-
+       
         </div>
         <div class="modal-footer">
-          <button onclick="addTripPart()" style="margin-right: auto;" class="btn btn-success">Gezi Parçası Ekle</button>
+          <button type="submit" style="margin-right: auto;" class="btn btn-success">Gezi Parçası Ekle</button>
           <button onclick="cancelTrip()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-          <button onclick="createTrip()" type="button" class="btn btn-primary">KAYDET</button>
+          <button  type="submit" class="btn btn-primary">KAYDET</button>
         </div>
+       </form>
       </div>
+      
     </div>
   </div>
 

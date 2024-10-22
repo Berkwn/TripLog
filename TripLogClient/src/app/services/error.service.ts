@@ -1,5 +1,9 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { SwalService } from "./swal.service";
+import { Injectable } from "@angular/core";
+
+
+@Injectable({ providedIn:'root'})
 
 export class ErrorService{
 

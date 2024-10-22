@@ -2,7 +2,10 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { ErrorService } from "./error.service";
 import { ResultModel } from "../models/Result.model";
 import { api } from "../models/constants";
+import { Injectable } from "@angular/core";
 
+
+@Injectable({ providedIn:'root'})
 export class HttpService{
 token:string=""
     

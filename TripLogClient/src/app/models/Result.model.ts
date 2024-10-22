@@ -1,5 +1,4 @@
 export class ResultModel<T>{
-
     data?:any;
     errorMessage?:string[];
     isSuccesfull?:boolean=true;

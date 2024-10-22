@@ -15,10 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\TripLogServer.Application\TripLogServer.Application.csproj" />
     <ProjectReference Include="..\TripLogServer.Infrastructure\TripLogServer.Infrastructure.csproj" />
   </ItemGroup>
 
