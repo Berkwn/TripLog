@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using TripLogServer.Domain.Abstractions;
 
 namespace TripLogServer.Infrastructure.Abstractions;
@@ -8,6 +9,16 @@ public class Repository<TEntity, Tcontext> : IRepository<TEntity> where TEntity 
     private readonly Tcontext _context;
 
     private DbSet<TEntity> Entity;
+
+    public IQueryable<TEntity> where(Expression<Func<TEntity, bool>> expression)
+    {
+        return _context.Set<TEntity>().Where(expression).AsQueryable();
+    }
+
+    public bool Any(Expression<Func<TEntity, bool>> expression)
+    {
+       return  _context.Set<TEntity>().Any(expression);
+    }
 
     public Repository(Tcontext context)
     {

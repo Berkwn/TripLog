@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TripLogServer.Domain.Entities
 {
-   public sealed class Trip
+   public sealed class TripEntity
     {
-        public Trip()
+        public TripEntity()
         {
             Id = Guid.NewGuid();
         }

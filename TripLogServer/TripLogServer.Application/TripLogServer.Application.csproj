@@ -15,6 +15,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TripLogServer.Domain\TripLogServer.Domain.csproj" />
+    <ProjectReference Include="..\TripLogServer.Infrastructure\TripLogServer.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

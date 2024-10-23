@@ -16,8 +16,7 @@ namespace TripLogServer.Domain.Entities
         public string Title { get; set; }=string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
-
-        public Trip? Trip { get; set; }
+        public TripEntity? Trip { get; set; }
         public Guid TripId { get; set; }
 
     }

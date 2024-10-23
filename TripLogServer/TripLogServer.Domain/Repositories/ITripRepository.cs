@@ -8,7 +8,7 @@ using TripLogServer.Domain.Entities;
 
 namespace TripLogServer.Domain.Repositories
 {
-    public interface ITripRepository:IRepository<Trip>
+    public interface ITripRepository:IRepository<TripEntity>
     {
     }
 }

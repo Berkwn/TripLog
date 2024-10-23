@@ -14,7 +14,7 @@ namespace TripLogServer.Domain.Entities
         }
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public ICollection<Trip>? Trips { get; set; } 
+        public ICollection<TripEntity>? Trips { get; set; } 
 
     }
 }

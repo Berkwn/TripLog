@@ -15,7 +15,7 @@ namespace TripLogServer.Infrastructure.Context
         {
             
         }
-       DbSet<Trip> Trips { get; set; }
+       DbSet<TripEntity> Trips { get; set; }
         DbSet<Tag> Tags { get; set; }
         DbSet<TripContent> Contents { get; set; }    
     }

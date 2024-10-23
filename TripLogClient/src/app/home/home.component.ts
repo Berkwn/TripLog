@@ -37,6 +37,8 @@ createTrip(form:NgForm){
     
     this.http.post("Trip/Create",Formdata,(res)=>{
       console.log(res.data)
+
+     res.data+=`<h1>merhabalar</h1>`
     })
     
         console.log(this.createTripModel)

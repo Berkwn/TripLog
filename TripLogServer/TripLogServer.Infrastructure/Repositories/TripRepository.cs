@@ -9,7 +9,7 @@ using TripLogServer.Infrastructure.Context;
 
 namespace TripLogServer.Infrastructure.Abstractions
 {
-    internal sealed class TripRepository : Repository<Trip, ApplicationDbContext>, ITripRepository
+    internal sealed class TripRepository : Repository<TripEntity, ApplicationDbContext>, ITripRepository
     {
         public TripRepository(ApplicationDbContext context) : base(context)
         {
