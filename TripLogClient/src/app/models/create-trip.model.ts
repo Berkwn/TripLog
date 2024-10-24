@@ -1,5 +1,6 @@
 
-import { TripContentModel } from "./Trip-Content";
+import { CreateTripContentModel } from "./create-trip-content.model";
+
 
 export class createTripModel{
     
@@ -7,5 +8,5 @@ export class createTripModel{
     description:string="";
     image:any=null;
     tags:string="";
-    tripContents:TripContentModel[]=[]
+    tripContents:CreateTripContentModel[] | null =null;
 }

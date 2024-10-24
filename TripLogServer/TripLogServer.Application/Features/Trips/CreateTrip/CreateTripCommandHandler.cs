@@ -41,6 +41,20 @@ namespace TripLogServer.Application.Features.Trips.CreateTrip
             }
             
             var triptags= tagRepository.where(searchtags=>tagList.Any(x=>x == searchtags.Name)).ToList();
+
+            string ContentImageUrl = await fileStorageService.SaveFileAsync(request.Image, "contents", cancellationToken);
+            foreach (var item in request.tripContent)
+            {  //content
+
+                TripContent tripContent = new()
+                {
+                    Title = item.title,
+                    Description = item.description,
+                    ImageUrl = ContentImageUrl
+                };
+            }
+
+
             string ImageUrl = await fileStorageService.SaveFileAsync(request.Image, "trips", cancellationToken);
 
             TripEntity trip = new()

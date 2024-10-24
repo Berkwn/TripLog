@@ -1,0 +1,136 @@
+<nav style="border-radius: 10px;" class="navbar navbar-expand-lg bg-body-tertiary container  mt-3" data-bs-theme="dark">
+    <div class="container-fluid">
+        <i class="fa-solid fa-earth-americas fa-lg me-2" style="color: #ffffff;"></i>
+      <a class="navbar-brand" href="#">TRİP LOG</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        </ul>
+        <a  style="color :white" class="nav-link tripekle" href="#" data-bs-toggle="modal" data-bs-target="#addTrip">Gezi Ekle</a>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar Bitiş noktası -->
+
+  <!-- TRİP EKLEME MODALI BAŞLANGIÇ  -->
+  <div id="addTrip" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form #addform="ngForm" (ngSubmit)="createTrip(addform)" class="form-group">
+        <div class="modal-body">
+          
+          <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Başlığı</span>
+            <input [(ngModel)]="createTripModel.title " name="title" id="TripTitle"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+          </div>
+
+          <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Metni</span>
+            <input [(ngModel)]="createTripModel.description" title="description" name="TripText"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+          </div>
+
+          <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Tagleri</span>
+            <textarea [(ngModel)]="createTripModel.tags"  name="TripTags" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" rows="4"></textarea>
+          </div>
+          
+
+          <div class="mb-3">
+            <input (change)="selectedImage($event)" name="images" class="form-control" type="file" id="formFile">
+          </div>
+          <div id="TripPhotos">
+            @for (item of tripContent; track $index) {
+
+            <app-trip-content [tripCounter]="item"></app-trip-content>
+            }
+           
+
+          </div>
+
+    <br>
+       
+        </div>
+        <div class="modal-footer">
+          <button  (click)="addTripParts()" type="button" style="margin-right: auto;" class="btn btn-success">Gezi Parçası Ekle</button>
+          <button onclick="cancelTrip()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+          <button  type="submit" class="btn btn-primary">KAYDET</button>
+        </div>
+       </form>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- TRİP EKLEME MODALI BİTİŞ -->
+
+   <!-- CARD EKLEME NOKTASI -->
+   <div id="CardContain" class="w-100  container mt-5">
+    @for (trip of tripModel; track trip) {
+
+      <div class="card" style="width: 58rem;">
+        <div class="card-main">
+            <div class="card-left">            
+                <img src="http://localhost:5235/${content.imageUrl}" class="card-img-top" alt="...">
+            </div>
+            <div class="card-right">
+                <div class="card-body tripbody">
+                  <div>
+                    <h5 class="card-title">{{trip.title}}</h5>
+                    <p class="card-text">{{trip.description}}</p>
+                  </div>  
+                <div>
+                  @for (tag of trip.tags; track tag) {
+                    @if (tag != null) {
+                      <a href="{{tag.name}}" (click)="FillFromTags(tag.name)">{{tag.name}}</a>&nbsp;&nbsp;
+                    }
+                  }
+                      <br><br>
+                      <a href="#" style="width: 100%;" class="btn btn-primary" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + $index" aria-expanded="true" aria-controls="collapseOne" style="margin-top:auto">Daha Fazlası İçin 🔽</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+    
+           <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header"></h2>
+                    <div id="collapse{{$index}}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <div id="carousel{{$index}}" class="carousel slide">
+                          <div class="carousel-inner">
+                            @for (content of trip.tripContents; track content) {
+                                <div class="carousel-item">
+    
+                                  <img src="http://localhost:5235/{{content.ImageUrl}}" class="d-block w-100 carousel-img" alt="...">
+                                  <div class="card-body">
+                                    <h5 class="card-title">{{content.title}}</h5>
+                                    <p class="card-text">{{content.description}}</p>
+                                  </div>
+                                </div>
+                            }
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel${index}" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel${index}" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Next</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+          </div>
+      </div>
+    }
+  
+
+  
+</div>
