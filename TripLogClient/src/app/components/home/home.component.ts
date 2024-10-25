@@ -6,6 +6,7 @@ import { HttpService } from '../../services/http.service';
 import { TripContentComponent } from "../trip-content/trip-content.component";
 import { CreateTripContentModel } from '../../models/create-trip-content.model';
 import { TripModel } from '../../models/Trip.model';
+import { Contentfile, Tripfile } from '../../models/constants';
 
 
 @Component({
@@ -17,6 +18,8 @@ import { TripModel } from '../../models/Trip.model';
 
 })
 export class HomeComponent implements OnInit {
+   Tripfile = Tripfile
+   ContentFile=Contentfile
   createTripModel:createTripModel=new createTripModel();
   tripCounter:number=1;
   maxTripCounter:number=10;
@@ -72,8 +75,18 @@ this.createTripModel.tripContents= allTripContent;
 
   }
 
-ngOnInit(): void {
+  GetAll(){
+    
+    this.http.post("Trip/GetAll",{},(res)=>{
+      console.log(res.data)
+      this.tripModel=res.data;
+      console.log(this.tripModel)
+    })
+  }
 
+
+ngOnInit(): void {
+this.GetAll();
 }
 
   

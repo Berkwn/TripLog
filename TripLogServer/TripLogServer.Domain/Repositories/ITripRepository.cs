@@ -10,5 +10,8 @@ namespace TripLogServer.Domain.Repositories
 {
     public interface ITripRepository:IRepository<TripEntity>
     {
+         IQueryable<TripEntity> GetAllTripWithContents();
     }
+    
+    
 }

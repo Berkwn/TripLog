@@ -76,7 +76,7 @@
       <div class="card" style="width: 58rem;">
         <div class="card-main">
             <div class="card-left">            
-                <img src="http://localhost:5235/${content.imageUrl}" class="card-img-top" alt="...">
+                <img src="{{Tripfile}}{{trip.imageUrl}}" class="card-img-top" alt="...">
             </div>
             <div class="card-right">
                 <div class="card-body tripbody">
@@ -105,20 +105,20 @@
                         <div id="carousel{{$index}}" class="carousel slide">
                           <div class="carousel-inner">
                             @for (content of trip.tripContents; track content) {
-                                <div class="carousel-item">
-    
-                                  <img src="http://localhost:5235/{{content.ImageUrl}}" class="d-block w-100 carousel-img" alt="...">
+                                <div class="carousel-item" [ngClass]="{'carousel-item' : true, 'active':$index==0}" >
+
+                                  <img src="{{Tripfile}}{{content.imageUrl}}" class="d-block w-100 carousel-img" alt="...">
                                   <div class="card-body">
                                     <h5 class="card-title">{{content.title}}</h5>
                                     <p class="card-text">{{content.description}}</p>
                                   </div>
                                 </div>
                             }
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel${index}" data-bs-slide="prev">
+                            <button class="carousel-control-prev" type="button"  [attr.data-bs-target]="'#carousel' + $index" data-bs-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                               <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carousel${index}" data-bs-slide="next">
+                            <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carousel' + $index"  data-bs-slide="next">
                               <span class="carousel-control-next-icon" aria-hidden="true"></span>
                               <span class="visually-hidden">Next</span>
                             </button>

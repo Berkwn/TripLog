@@ -4,7 +4,7 @@ export class TripContentModel{
     id:string="";
     title:string="";
     description:string="";
-    ImageUrl:string="";
+    imageUrl:string="";
     tags:TagModel[]=[];
     tripContents:TripContentModel[]=[]
 }

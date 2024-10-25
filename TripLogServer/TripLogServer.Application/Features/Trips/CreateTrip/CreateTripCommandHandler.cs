@@ -42,16 +42,18 @@ namespace TripLogServer.Application.Features.Trips.CreateTrip
             
             var triptags= tagRepository.where(searchtags=>tagList.Any(x=>x == searchtags.Name)).ToList();
 
-            string ContentImageUrl = await fileStorageService.SaveFileAsync(request.Image, "contents", cancellationToken);
+            List<TripContent> tripContents = new();
+
             foreach (var item in request.tripContent)
             {  //content
-
+                string ContentImageUrl = await fileStorageService.SaveFileAsync(request.Image, "contents", cancellationToken);
                 TripContent tripContent = new()
                 {
                     Title = item.title,
                     Description = item.description,
                     ImageUrl = ContentImageUrl
                 };
+                tripContents.Add(tripContent);
             }
 
 
@@ -62,7 +64,8 @@ namespace TripLogServer.Application.Features.Trips.CreateTrip
                 Title = request.title,
                 Description = request.Description,
                 Tags = triptags,
-                ImageUrl=ImageUrl
+                ImageUrl = ImageUrl,
+                TripContents = tripContents
             };
 
             Console.WriteLine(trip);

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TripLogServer.Application.Features.Trip.CreateTrip;
+using TripLogServer.Application.Features.Trips.GetAllTrip;
 using TripLogServer.WebAPI.Abstractions;
 
 namespace TripLogServer.WebAPI.Controllers
@@ -14,6 +15,13 @@ namespace TripLogServer.WebAPI.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm]CreateTripCommand request,CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(request, cancellationToken);
+            return StatusCode(response.StatusCode, response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetAll( GetAllTripQuery request, CancellationToken cancellationToken)
         {
             var response = await _mediator.Send(request, cancellationToken);
             return StatusCode(response.StatusCode, response);
