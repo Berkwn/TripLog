@@ -30,7 +30,8 @@ namespace TripLogServer.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,7 +60,7 @@ namespace TripLogServer.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TagTrip",
+                name: "TagTripEntity",
                 columns: table => new
                 {
                     TagsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -67,15 +68,15 @@ namespace TripLogServer.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TagTrip", x => new { x.TagsId, x.TripsId });
+                    table.PrimaryKey("PK_TagTripEntity", x => new { x.TagsId, x.TripsId });
                     table.ForeignKey(
-                        name: "FK_TagTrip_Tags_TagsId",
+                        name: "FK_TagTripEntity_Tags_TagsId",
                         column: x => x.TagsId,
                         principalTable: "Tags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TagTrip_Trips_TripsId",
+                        name: "FK_TagTripEntity_Trips_TripsId",
                         column: x => x.TripsId,
                         principalTable: "Trips",
                         principalColumn: "Id",
@@ -88,8 +89,8 @@ namespace TripLogServer.Infrastructure.Migrations
                 column: "TripId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TagTrip_TripsId",
-                table: "TagTrip",
+                name: "IX_TagTripEntity_TripsId",
+                table: "TagTripEntity",
                 column: "TripsId");
         }
 
@@ -100,7 +101,7 @@ namespace TripLogServer.Infrastructure.Migrations
                 name: "Contents");
 
             migrationBuilder.DropTable(
-                name: "TagTrip");
+                name: "TagTripEntity");
 
             migrationBuilder.DropTable(
                 name: "Tags");

@@ -27,6 +27,7 @@ namespace TripLogServer.Infrastructure.Abstractions
                 Title=x.Title,
                  Description=x.Description,
                  ImageUrl = x.ImageUrl,
+                 CreatedDate=x.CreatedDate,
                 Tags = x.Tags.Select(x=> new Tag
                 {
                      Id= x.Id,

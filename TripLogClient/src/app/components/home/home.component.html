@@ -1,5 +1,5 @@
 <nav style="border-radius: 10px;" class="navbar navbar-expand-lg bg-body-tertiary container  mt-3" data-bs-theme="dark">
-    <div class="container-fluid">
+    <div class="container-fluid" style="display: flex; align-items: center;">
         <i class="fa-solid fa-earth-americas fa-lg me-2" style="color: #ffffff;"></i>
       <a class="navbar-brand" href="#">TRİP LOG</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" #closebtn data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form #addform="ngForm" (ngSubmit)="createTrip(addform)" class="form-group">
         <div class="modal-body">
@@ -42,7 +42,11 @@
           
 
           <div class="mb-3">
+          
             <input (change)="selectedImage($event)" name="images" class="form-control" type="file" id="formFile">
+            @if(imagePreview){
+                <img class="mt-2" [src]="imagePreview" alt="" style="width: 200px; height: 100px;" >
+            }
           </div>
           <div id="TripPhotos">
             @for (item of tripContent; track $index) {
@@ -67,37 +71,104 @@
     </div>
   </div>
 
-  <!-- TRİP EKLEME MODALI BİTİŞ -->
+  <!-- TRİP GÜNCELLEME BAŞLANGIÇ -->
+  
+  <div id="updateTrip" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Trip Update Modal</h5>
+          <button type="button" class="btn-close" #openUpdateModal data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form #addform="ngForm" (ngSubmit)="updateTrip(addform)" class="form-group">
+        <div class="modal-body">
+          
+          <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Başlığı</span>
+            <input [(ngModel)]="updateTripModel.title " name="updatetitle" id="TripTitle"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+          </div>
+
+          <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Metni</span>
+            <input [(ngModel)]="updateTripModel.description" title="description" name="updateTripText"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+          </div>
+
+          <div class="input-group input-group-md mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Gezi Tagleri</span>
+            <textarea [(ngModel)]="updateTripModel.tags"  name="updateTripTags" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" rows="4"></textarea>
+          </div>
+          
+
+          <div class="mb-3">
+
+            <input (change)="updateSelectedImage($event)" name="updateimages" class="form-control" type="file" id="formFile">
+            @if(updateImagePreview){
+              <img class="mt-2" [src]="updateImagePreview" alt="" style="width: 200px; height: 100px;" >
+          }
+          </div>
+          <div id="TripPhotos">
+            @for (item of updatetripContent; track $index) {
+
+            <app-trip-content [tripCounter]="item"></app-trip-content>
+            }
+           
+
+          </div>
+
+    <br>
+       
+        </div>
+        <div class="modal-footer">
+          <button  (click)="addUpdateTripParts()" type="button" style="margin-right: auto;" class="btn btn-success">Gezi Parçası Ekle</button>
+          <button (click)="closeModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+          <button  type="submit" class="btn btn-primary">KAYDET</button>
+        </div>
+       </form>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- TRİP GÜNCELLEME BİTİŞ -->
 
    <!-- CARD EKLEME NOKTASI -->
    <div id="CardContain" class="w-100  container mt-5">
     @for (trip of tripModel; track trip) {
 
-      <div class="card" style="width: 58rem;">
+      <div class="card" style="width: auto; ">
         <div class="card-main">
-            <div class="card-left">            
+            <div class="card-left">     
+               
                 <img src="{{Tripfile}}{{trip.imageUrl}}" class="card-img-top" alt="...">
             </div>
             <div class="card-right">
                 <div class="card-body tripbody">
                   <div>
+                    <h6 style="float: right;">{{trip.createdDate | date: 'yyyy-MM-dd : HH-mm'}}</h6>
                     <h5 class="card-title">{{trip.title}}</h5>
                     <p class="card-text">{{trip.description}}</p>
                   </div>  
                 <div>
                   @for (tag of trip.tags; track tag) {
                     @if (tag != null) {
-                      <a href="{{tag.name}}" (click)="FillFromTags(tag.name)">{{tag.name}}</a>&nbsp;&nbsp;
+                      <a href="#{{tag.name}}" (click)="FillFromTags(tag.name)">#{{tag.name}}</a>&nbsp;&nbsp;
                     }
                   }
                       <br><br>
-                      <a href="#" style="width: 100%;" class="btn btn-primary" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + $index" aria-expanded="true" aria-controls="collapseOne" style="margin-top:auto">Daha Fazlası İçin 🔽</a>
+                      <div style="display: flex; align-items: center;">
+                        <div style="display: flex;" class="w-100">
+                      <a href="#" style="width: 100%;display: flex;" class="btn btn-primary" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + $index" aria-expanded="false" aria-controls="collapse" style="margin-top:auto">Daha Fazlası İçin 🔽</a>
+                    </div>
+                      <i data-bs-toggle="modal" data-bs-target="#updateTrip" title="Edit This post" style="cursor: pointer; color: rgb(193, 151, 0);" (click)="updateModal(trip)" class="fa-regular fa-pen-to-square fa-2xl me-2" ></i>
+                      <i  class="fa-solid fa-xmark fa-2xl" style="color: red; cursor: pointer;" title="Delete This post"></i>
+                    </div>
                   </div>
                 </div>
             </div>
         </div>
     
-           <div class="accordion" id="accordionExample">
+           <div style="display: flex; justify-content: space-between;" class="accordion" id="accordionExample">
+            <div class="content-side d-flex"  style="flex:3rem;">
                 <div class="accordion-item">
                   <h2 class="accordion-header"></h2>
                     <div id="collapse{{$index}}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -106,10 +177,9 @@
                           <div class="carousel-inner">
                             @for (content of trip.tripContents; track content) {
                                 <div class="carousel-item" [ngClass]="{'carousel-item' : true, 'active':$index==0}" >
-
                                   <img src="{{Tripfile}}{{content.imageUrl}}" class="d-block w-100 carousel-img" alt="...">
-                                  <div class="card-body">
-                                    <h5 class="card-title">{{content.title}}</h5>
+                                  <div style="height: 200px; overflow-y: auto;" class="card-body">
+                                    <h5 class="card-title">{{$index+1}}.{{content.title}}</h5>
                                     <p class="card-text">{{content.description}}</p>
                                   </div>
                                 </div>
@@ -127,6 +197,50 @@
                       </div>
                     </div>
                 </div>
+            </div>
+            <div style="flex: 1rem; height: auto;" class="command-side">
+              <div id="collapse{{$index}}" class="collapse">
+                <div class="card card-body" style="width: auto; height: 734px;">
+                  <h5>Command Area</h5>
+                  <div class="list-group" style="overflow-y: auto; height: 500px; border: 1px;">
+                    <div class="list-group-item">
+                      <div class="avatar">
+                        B
+                      </div>
+                      <div class="comment-content">
+                        <strong>Brad lee</strong>
+                        <p class="mb-0"> BU HAYATI BİR SEN YAŞIYON AMQ </p>
+                      </div>
+                    </div>
+                    <div class="list-group-item">
+                      <div class="avatar">
+                        B
+                      </div>
+                      <div class="comment-content">
+                        <strong>Brad lee</strong>
+                        <p class="mb-0"> BU HAYATI BİR SEN YAŞIYON AMQ </p>
+                      </div>
+                    </div>
+                    <div class="list-group-item">
+                      <div class="avatar">
+                        B
+                      </div>
+                      <div class="comment-content">
+                        <strong>Brad lee</strong>
+                        <p class="mb-0"> BU HAYATI BİR SEN YAŞIYON AMQ </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="add-comment mt-2">
+                     <div class="card card-body">
+                      <h5>Leave A comment</h5>
+                      <textarea class="form-control" name="comment" rows="2" style="resize: none;" ></textarea>
+                      <button class="btn btn-secondary mt-2 w-100">Send Command</button>
+                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
       </div>
     }

@@ -10,5 +10,9 @@
     <h6>{{tripCounter}} Alt Resim</h6>
     <input type="file" name="image" class="form-control" (change)="selectedImage($event)"  placeholder="Resim başlığını giriniz">
     <br>
+    @if(imagePreview){
+        <img [src]="imagePreview" alt="updatefoto" style="width: 200px; height: 100px;">
+    }
+    
 
 </div>

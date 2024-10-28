@@ -10,7 +10,7 @@ namespace TripLogServer.Application.Features.Trips.GetAllTrip
         public async Task<Result<List<TripEntity>>> Handle(GetAllTripQuery request, CancellationToken cancellationToken)
         {
             var response =  tripRepository.GetAllTripWithContents();
-            return response.ToList();
+            return response.ToList().OrderByDescending(x=>x.CreatedDate).ToList();
         }
 
         

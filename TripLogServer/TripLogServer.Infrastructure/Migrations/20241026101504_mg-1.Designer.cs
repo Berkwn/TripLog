@@ -12,8 +12,8 @@ using TripLogServer.Infrastructure.Context;
 namespace TripLogServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241021104429_mg-2")]
-    partial class mg2
+    [Migration("20241026101504_mg-1")]
+    partial class mg1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace TripLogServer.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TagTrip", b =>
+            modelBuilder.Entity("TagTripEntity", b =>
                 {
                     b.Property<Guid>("TagsId")
                         .HasColumnType("uniqueidentifier");
@@ -37,7 +37,7 @@ namespace TripLogServer.Infrastructure.Migrations
 
                     b.HasIndex("TripsId");
 
-                    b.ToTable("TagTrip");
+                    b.ToTable("TagTripEntity");
                 });
 
             modelBuilder.Entity("TripLogServer.Domain.Entities.Tag", b =>
@@ -53,29 +53,6 @@ namespace TripLogServer.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("TripLogServer.Domain.Entities.Trip", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Trips");
                 });
 
             modelBuilder.Entity("TripLogServer.Domain.Entities.TripContent", b =>
@@ -106,7 +83,33 @@ namespace TripLogServer.Infrastructure.Migrations
                     b.ToTable("Contents");
                 });
 
-            modelBuilder.Entity("TagTrip", b =>
+            modelBuilder.Entity("TripLogServer.Domain.Entities.TripEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Trips");
+                });
+
+            modelBuilder.Entity("TagTripEntity", b =>
                 {
                     b.HasOne("TripLogServer.Domain.Entities.Tag", null)
                         .WithMany()
@@ -114,7 +117,7 @@ namespace TripLogServer.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TripLogServer.Domain.Entities.Trip", null)
+                    b.HasOne("TripLogServer.Domain.Entities.TripEntity", null)
                         .WithMany()
                         .HasForeignKey("TripsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -123,7 +126,7 @@ namespace TripLogServer.Infrastructure.Migrations
 
             modelBuilder.Entity("TripLogServer.Domain.Entities.TripContent", b =>
                 {
-                    b.HasOne("TripLogServer.Domain.Entities.Trip", "Trip")
+                    b.HasOne("TripLogServer.Domain.Entities.TripEntity", "Trip")
                         .WithMany("TripContents")
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -132,7 +135,7 @@ namespace TripLogServer.Infrastructure.Migrations
                     b.Navigation("Trip");
                 });
 
-            modelBuilder.Entity("TripLogServer.Domain.Entities.Trip", b =>
+            modelBuilder.Entity("TripLogServer.Domain.Entities.TripEntity", b =>
                 {
                     b.Navigation("TripContents");
                 });

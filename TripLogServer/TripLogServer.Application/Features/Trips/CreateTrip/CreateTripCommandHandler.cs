@@ -46,7 +46,7 @@ namespace TripLogServer.Application.Features.Trips.CreateTrip
 
             foreach (var item in request.tripContent)
             {  //content
-                string ContentImageUrl = await fileStorageService.SaveFileAsync(request.Image, "contents", cancellationToken);
+                string ContentImageUrl = await fileStorageService.SaveFileAsync(item.Image, "contents", cancellationToken);
                 TripContent tripContent = new()
                 {
                     Title = item.title,

@@ -1,11 +1,12 @@
 import { TagModel } from "./Tag.model";
 import { TripContentModel } from "./Trip-Content";
 
-export class TripModel{
+export class UpdateTripModel{
 id:number=0;
 title:string="";
  description:string="";
- tags:TagModel[]=[];
+ tags:string="";
+ image:any=null;
  imageUrl:string="";
  createdDate:string="";
 tripContents:TripContentModel[]=[];
