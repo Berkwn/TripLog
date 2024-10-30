@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TripLogServer.Domain.Entities;
@@ -16,6 +17,11 @@ namespace TripLogServer.Infrastructure.Abstractions
         public TripRepository(ApplicationDbContext context) : base(context)
         {
             _context = context.Set<TripEntity>();
+        }
+
+        public TripEntity FirstOrDefault(Expression<Func<TripEntity, bool>> expression)
+        {
+            return _context.Include(x=>x.Tags).Include(x=>x.TripContents).FirstOrDefault(expression);
         }
 
         public  IQueryable<TripEntity> GetAllTripWithContents() 

@@ -10,5 +10,7 @@ namespace TripLogServer.Infrastructure.Services
     public interface IFileStorageService
     {
         Task<string> SaveFileAsync(IFormFile file, string folder, CancellationToken cancellationToken);
+
+        Task<bool> DeleteFileAsync(string relativePath, CancellationToken cancellationToken);
     }
 }

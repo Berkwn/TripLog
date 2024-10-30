@@ -30,5 +30,35 @@ namespace TripLogServer.Infrastructure.Services
 
             return Path.Combine("images", folder, fileName).Replace("\\", "/");
         }
+
+        public async Task<bool> DeleteFileAsync(string relativePath, CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrEmpty(relativePath))
+            {
+                throw new ArgumentException("Invalid file path");
+            }
+
+            var filePath = Path.Combine(_baseDirectory, relativePath.Replace("/", "\\"));
+
+            if (!File.Exists(filePath))
+            {
+                return false;
+            };
+
+            try
+            {
+                await Task.Run(() => File.Delete(filePath),cancellationToken);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+                
+            }
+
+        }
+
+
     }
 }

@@ -8,6 +8,9 @@ import { CreateTripContentModel } from '../../models/create-trip-content.model';
 import { TripModel } from '../../models/Trip.model';
 import { Contentfile, Tripfile } from '../../models/constants';
 import { UpdateTripModel } from '../../models/update-trip.model';
+import { UpdateTripContentModel } from '../../models/update-trip-content.model';
+import Swal from 'sweetalert2';
+import { SwalService } from '../../services/swal.service';
 
 
 @Component({
@@ -37,7 +40,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private http:HttpService,
-  
+    private swal:SwalService
   ) {
   }
 
@@ -93,6 +96,7 @@ this.createTripModel.tripContents= allTripContent;
     this.http.post("Trip/Create",Formdata,(res)=>{
       console.log(res.data)
       this.closebtn?.nativeElement.click();
+      this.GetAll();
       
     })
     
@@ -169,7 +173,7 @@ this.GetAll();
  } 
 
 updateModal(trip:TripModel){
-
+this.updateTripModel.id=trip.id
 this.updateTripModel.title=trip.title;
 this.updateTripModel.description=trip.description;
 this.updateTripModel.tags=trip.tags.map(x=>x.name).join(" ");
@@ -186,7 +190,7 @@ trip.tripContents.forEach((content,index)=>{
     setTimeout(() => {
       const currentComponent =this.updatetripContentComponent.toArray()[index];
       if(currentComponent){
-          currentComponent.setValues(content.title,content.description,content.description,content.imageUrl)
+          currentComponent.setValues(content.id,content.title,content.description,content.imageUrl)
       }
     });
 })
@@ -201,9 +205,58 @@ trip.tripContents.forEach((content,index)=>{
 
  updateTrip(form:NgForm){
   if(form.valid){
+
+    const allTripContent:UpdateTripContentModel[]=this.tripContentComponent.map(tripContent=>{
+      return tripContent.getUpdateTripContentData();
+    });
+  
+  this.updateTripModel.tripContents= allTripContent;
+
+
+    const Formdata=new FormData();
+    Formdata.append("id",this.updateTripModel.id)
+    Formdata.append("title",this.updateTripModel.title)
+    Formdata.append("description",this.updateTripModel.description)
+    Formdata.append("imageUrl",this.updateTripModel.image)
+    Formdata.append("tags",this.updateTripModel.tags)
+
+    this.updateTripModel.tripContents.forEach((content, index) => {
+      Formdata.append(`tripContents[${index}].id`, content.id);
+      Formdata.append(`tripContents[${index}].title`, content.title);
+      Formdata.append(`tripContents[${index}].description`, content.description);
+      Formdata.append(`tripContents[${index}].image`, content.image); 
+  
+      });
+
+
+
+    this.http.post("Trip/Update",Formdata,(res)=>{
+      console.log(res.data)
+      this.closebtn?.nativeElement.click();
+      
+    })
+    
     
   }
+  
+   }
 
- }
+DeleteTrip(id:string){
+this.http.post("Trip/Delete",{id: id},(res)=>{
+this.swal.callSwal("delete","are you sure delete",()=>{
+  res.data;
+  this.GetAll();
+})
+  
+
+  console.log(res.data)
+})
 
 }
+
+
+  }
+ 
+
+
+
