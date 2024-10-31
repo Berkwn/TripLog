@@ -7,9 +7,7 @@ import { Injectable } from "@angular/core";
 
 export class ErrorService{
 
-    /**
-     *
-     */
+
     constructor(
 
         private swal:SwalService

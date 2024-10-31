@@ -86,7 +86,7 @@ internal sealed class UpdateTripCommandHandler(
             if (request.Image != null) 
             {
                 string ContentImageUrl = await fileStorageService.SaveFileAsync(request.Image, "trips", cancellationToken);
-
+                await fileStorageService.DeleteFileAsync(trip.ImageUrl, cancellationToken);
                 trip.ImageUrl = ContentImageUrl;
 
             }
@@ -101,7 +101,7 @@ internal sealed class UpdateTripCommandHandler(
                     if(tripContent.Image!= null)
                     {
                         string ContentImageUrl = await fileStorageService.SaveFileAsync(request.Image, "contents", cancellationToken);
-                        await fileStorageService.DeleteFileAsync(ContentImageUrl, cancellationToken);   
+                        await fileStorageService.DeleteFileAsync(content.ImageUrl, cancellationToken);   
                         content.ImageUrl = ContentImageUrl;
 
                     }

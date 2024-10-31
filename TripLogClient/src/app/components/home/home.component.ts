@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, QueryList, ViewChild, viewChild, ViewChildren } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Form, FormsModule, NgForm } from '@angular/forms';
 import { createTripModel } from '../../models/create-trip.model';
 import { HttpService } from '../../services/http.service';
 import { TripContentComponent } from "../trip-content/trip-content.component";
@@ -9,8 +9,9 @@ import { TripModel } from '../../models/Trip.model';
 import { Contentfile, Tripfile } from '../../models/constants';
 import { UpdateTripModel } from '../../models/update-trip.model';
 import { UpdateTripContentModel } from '../../models/update-trip-content.model';
-import Swal from 'sweetalert2';
 import { SwalService } from '../../services/swal.service';
+import { CreateUserModel } from '../../models/create-user.model';
+import { LoginModel } from '../../models/Login-model';
 
 
 @Component({
@@ -26,13 +27,17 @@ export class HomeComponent implements OnInit {
    ContentFile=Contentfile
   createTripModel:createTripModel=new createTripModel();
   updateTripModel:UpdateTripModel=new UpdateTripModel();
+  createUserModel:CreateUserModel=new CreateUserModel();
+  createLoginModel:LoginModel=new LoginModel()
   tripCounter:number=1;
   maxTripCounter:number=10;
   imagePreview:string | ArrayBuffer | null="";
   updateImagePreview:string | ArrayBuffer | null="";
 
-  tripContent:number[]=[]
- 
+tripContent:number[]=[]
+
+test:boolean=true;
+
   
   updateTripCounter:number=1;
   updateMaxTripCounter:number=10;
@@ -47,6 +52,7 @@ export class HomeComponent implements OnInit {
   @ViewChildren(TripContentComponent) updatetripContentComponent!: QueryList<TripContentComponent> 
   @ViewChildren(TripContentComponent) tripContentComponent!: QueryList<TripContentComponent> 
   @ViewChild("closebtn") closebtn: ElementRef<HTMLButtonElement> | undefined
+  @ViewChild("password") password : ElementRef<HTMLInputElement> | undefined;
 
 
   tripModel:TripModel[]=[]
@@ -104,6 +110,37 @@ this.createTripModel.tripContents= allTripContent;
   }
 
   }
+
+  craeteUser(form:NgForm){
+    if(form.valid){
+   this.http.post("User/Create",this.createUserModel,(res)=>{
+    this.createUserModel=res.data;
+   })
+
+
+    }
+    }
+
+    Login(form:NgForm){
+      if(form.valid){
+
+        this.http.post("Auth/Login",this.createLoginModel,(res)=>{
+
+          this.swal.callToast("hoş geldiniz","success")
+        localStorage.setItem("token",res.data?.token)
+        })
+      }
+    }
+  
+
+
+ changeTest(){
+  if(this.test){
+    this.test=false;
+  }else{
+    this.test=true;
+  }
+ }
 
   GetAll(){
     
@@ -254,9 +291,35 @@ this.swal.callSwal("delete","are you sure delete",()=>{
 
 }
 
+showOrHidePassword(event:Event){
+  const input= event.target as HTMLElement
+  const password=input.previousElementSibling as HTMLInputElement
+  if(password===undefined) return;
+
+  if(password.type==="password"){
+    password.type="text";
+  }
+  else{
+    password.type="password";
+  }
+
+
+
 
   }
+  label:boolean=true;
+  textChange(event:Event){
+   const labelel=event.target as HTMLLabelElement
+   if(this.label){
+    labelel.innerHTML="istiyorum"
+    this.createUserModel.isAuthor=true;
+  }else{
+    labelel.innerHTML="istemiyorum"
+    this.createUserModel.isAuthor=false;
+  }
+  this.label=!this.label;
+   }
  
 
-
+}
 

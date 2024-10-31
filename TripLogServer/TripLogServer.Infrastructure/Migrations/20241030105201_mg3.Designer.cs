@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TripLogServer.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using TripLogServer.Infrastructure.Context;
 namespace TripLogServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241030105201_mg3")]
+    partial class mg3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,21 @@ namespace TripLogServer.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AppRoleAppUser", b =>
+                {
+                    b.Property<Guid>("appUsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("rolesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("appUsersId", "rolesId");
+
+                    b.HasIndex("rolesId");
+
+                    b.ToTable("AppRoleAppUser");
+                });
 
             modelBuilder.Entity("TagTripEntity", b =>
                 {
@@ -37,10 +55,31 @@ namespace TripLogServer.Infrastructure.Migrations
                     b.ToTable("TagTripEntity");
                 });
 
+            modelBuilder.Entity("TripLogServer.Domain.Entities.AppRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("TripLogServer.Domain.Entities.AppUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -52,9 +91,6 @@ namespace TripLogServer.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsAuthor")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -89,7 +125,7 @@ namespace TripLogServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("appUsers");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TripLogServer.Domain.Entities.Tag", b =>
@@ -159,6 +195,21 @@ namespace TripLogServer.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Trips");
+                });
+
+            modelBuilder.Entity("AppRoleAppUser", b =>
+                {
+                    b.HasOne("TripLogServer.Domain.Entities.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("appUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TripLogServer.Domain.Entities.AppRole", null)
+                        .WithMany()
+                        .HasForeignKey("rolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TagTripEntity", b =>

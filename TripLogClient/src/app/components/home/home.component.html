@@ -8,14 +8,162 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         </ul>
+      
+        @if(true){
+          <a  style="color :white" class="nav-link tripekle me-4" href="#" data-bs-toggle="modal" data-bs-target="#loginTrip" (click)="changeTest()"  ><button class="btn btn-secondary"> <i class="fa-solid fa-plane-arrival me-2"></i>Giriş Yap</button></a>
+        }@else {
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle me-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-plane"></i> <i class="fa-regular fa-building"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a  class="dropdown-item" href="#"><i class="fa-solid fa-plane-departure me-2"></i > Çıkış Yap </a></li>
+            </ul>
+          </div>
+
+        }
         <a  style="color :white" class="nav-link tripekle" href="#" data-bs-toggle="modal" data-bs-target="#addTrip">Gezi Ekle</a>
       </div>
     </div>
   </nav>
   <!-- Navbar Bitiş noktası -->
 
+<!-- Login kısmı başlangıç -->
+<div id="loginTrip" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header w-100">
+        <h5 class="modal-title modal-title-centered text-center w-100">
+          <H2>GİRİŞ YAP</H2></h5>
+        <button type="button" class="btn-close" #closebtn data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+     
+      <div class="modal-body">
+        <form formValidate  #loginForm="ngForm" (submit)="Login(loginForm)" autocomplete="off">
+          <div class="form-group">
+              <label for="userNameOrEmail">Username or Email</label>
+              <input type="text" class="form-control" [(ngModel)]="createLoginModel.userNameOrEmail"  name="userNameOrEmail" required minlength="3">
+              <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group mt-2 position-relative">
+              <label for="">Password</label>
+              <input type="password" #password class="form-control" [(ngModel)]="createLoginModel.password"  name="password" required value="123asd">
+              
+              <div class="mt-2" style="display: flex; align-items: center;">
+                <p class="mb-0" style="flex: 1;">Hesabınız yok mu</p> 
+                
+                <a href="#" data-bs-toggle="modal" data-bs-target="#registerTrip">Hesap oluştur</a>
+              </div>
+              <div class="invalid-feedback"></div>
+              @if (password.type==="password") {
+                  <i class="fa-solid fa-eye eye" (click)="showOrHidePassword($event)"></i>
+              }@else {
+                  <i class="fa-solid fa-eye-slash eye" (click)="showOrHidePassword($event)"></i>
+              }
+          </div>
+          <div class="form-group mt-2">
+              <button type="submit" class="btn btn-dark w-100">
+                  <i class="fa-solid fa-lock me-1"></i>
+                  Sign In
+              </button>
+          </div>
+      </form>
+        
+      
+         
+
+        </div>
+       </div>
+    
+  </div>
+</div>
+
+
+<!-- Login kısmı bitiş -->
+
+<!-- Register kısmı başlangıç -->
+<div id="registerTrip" class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header w-100">
+        <h5 class="modal-title modal-title-centered text-center w-100">
+          <H2>KAYIT OL</H2></h5>
+        <button type="button" class="btn-close" #closebtn data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+     
+      <div class="modal-body">
+        <form formValidate (ngSubmit)="craeteUser(registerForm)"  #registerForm="ngForm" autocomplete="off">
+          <div class="btn-group w-100" role="group" aria-label="Basic checkbox toggle button group">
+            <input type="checkbox" [(ngModel)]="createUserModel.isAuthor" class="btn-check " id="btncheck1" autocomplete="off">
+            @if(label){
+              <label for="btncheck1" class="btn btn-outline-secondary text-center mb-3" (click)="textChange($event)"> Yazar olarak Kayıt olmak istemiyorum</label>
+            }@else {
+             
+              <label for="btncheck1" class="btn btn-outline-danger text-center mb-3" (click)="textChange($event)"> Yazar olarak Kayıt olmak istiyorum</label>
+
+            }
+           
+          
+          </div>
+          <div class="form-group">
+            <label for="userNameOrEmail"> UserName</label>
+            <input type="text" [(ngModel)]="createUserModel.username" class="form-control"  name="RegisteruserNameOrEmail" required minlength="3">
+        
+        </div>
+          <div class="form-group">
+              <label for="userNameOrEmail"> Email</label>
+              <input type="text" [(ngModel)]="createUserModel.email" class="form-control"  name="RegisteruserNameOrEmail" required minlength="3">
+          
+          </div>
+          <div class="form-group mt-2 position-relative">
+              <label for="">Password</label>
+              <input type="password" #password class="form-control" [(ngModel)]="createUserModel.password"   name="RegisterPassword" required value="123asd">
+              @if (password.type==="password") {
+                <i class="fa-solid fa-eye eye" (click)="showOrHidePassword($event)"></i>
+            }@else {
+                <i class="fa-solid fa-eye-slash eye" (click)="showOrHidePassword($event)"></i>
+            }
+          </div>
+          <div class="form-group mt-2 position-relative">
+              <label class="mt-2" for="">Password Retry</label>
+              <input type="password" #password class="form-control" [(ngModel)]="createUserModel.passwordCheck"  name="RegisterPasswordRetry" required value="123asd">
+              @if (password.type==="password") {
+                <i class="fa-solid fa-eye eye" (click)="showOrHidePassword($event)"></i>
+            }@else {
+                <i class="fa-solid fa-eye-slash eye" (click)="showOrHidePassword($event)"></i>
+            }
+          </div>
+              <div class="mt-2" style="display: flex; align-items: center;">
+             
+                <p class="mb-0" style="flex: 1;">Hesabınız var mı</p> 
+                <a href="#" data-bs-toggle="modal" data-bs-target="#loginTrip">Giriş Yap</a>
+              </div>
+
+             
+        
+          <div class="form-group mt-2">
+              <button type="submit" class="btn btn-dark w-100">
+                  <i class="fa-solid fa-lock me-1"></i>
+                  Sign In
+              </button>
+          </div>
+      </form>
+        
+      
+         
+
+        </div>
+       </div>
+    
+  </div>
+</div>
+
+
+<!-- Register kısmı bitiş -->
+
+
   <!-- TRİP EKLEME MODALI BAŞLANGIÇ  -->
-  <div id="addTrip" class="modal" tabindex="-1">
+  <div id="addTrip" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -62,6 +210,7 @@
         </div>
         <div class="modal-footer">
           <button  (click)="addTripParts()" type="button" style="margin-right: auto;" class="btn btn-success">Gezi Parçası Ekle</button>
+    
           <button onclick="cancelTrip()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
           <button  type="submit" class="btn btn-primary">KAYDET</button>
         </div>
@@ -73,7 +222,7 @@
 
   <!-- TRİP GÜNCELLEME BAŞLANGIÇ -->
   
-  <div id="updateTrip" class="modal" tabindex="-1">
+  <div id="updateTrip" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

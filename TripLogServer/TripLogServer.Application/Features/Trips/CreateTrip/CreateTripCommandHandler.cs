@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using TripLogServer.Application.Features.Trip.CreateTrip;
 using TripLogServer.Domain.Entities;
 using TripLogServer.Domain.Repositories;
-using TripLogServer.Infrastructure.Context;
 using TripLogServer.Infrastructure.Services;
 using TS.Result;
 
