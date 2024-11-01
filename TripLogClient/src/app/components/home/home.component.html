@@ -9,20 +9,30 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         </ul>
       
-        @if(true){
-          <a  style="color :white" class="nav-link tripekle me-4" href="#" data-bs-toggle="modal" data-bs-target="#loginTrip" (click)="changeTest()"  ><button class="btn btn-secondary"> <i class="fa-solid fa-plane-arrival me-2"></i>Giriş Yap</button></a>
+        @if (!activeUser) {
+
+          <a  style="color :white" class="nav-link tripekle me-4" href="#" data-bs-toggle="modal" data-bs-target="#loginTrip" #loginModal  ><button class="btn btn-secondary"> <i class="fa-solid fa-plane-arrival me-2"></i>Giriş Yap</button></a>
+
         }@else {
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle me-4" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-plane"></i> <i class="fa-regular fa-building"></i>
+          <div  class="dropdown">
+            <button class="btn btn-secondary  me-4" style="display: flex; justify-content:center; align-items: center; height: 40px;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="">
+              <i class="fa-solid fa-plane"></i> <i class="fa-regular fa-building me-2"></i>
+            </div>
+              <div>
+              <p class="dropdown-toggle mt-3">{{activeUser.userName}}</p>
+              </div>
             </button>
             <ul class="dropdown-menu">
-              <li><a  class="dropdown-item" href="#"><i class="fa-solid fa-plane-departure me-2"></i > Çıkış Yap </a></li>
+              <li><a (click)="Logout()" class="dropdown-item" href="#"><i class="fa-solid fa-plane-departure me-2"></i > Çıkış Yap </a></li>
             </ul>
           </div>
 
         }
-        <a  style="color :white" class="nav-link tripekle" href="#" data-bs-toggle="modal" data-bs-target="#addTrip">Gezi Ekle</a>
+        @if(activeUser?.isAuthor){
+          <a  style="color :white" class="nav-link tripekle" href="#" data-bs-toggle="modal" data-bs-target="#addTrip">Gezi Ekle</a>
+        }
+        
       </div>
     </div>
   </nav>
@@ -47,22 +57,22 @@
           </div>
           <div class="form-group mt-2 position-relative">
               <label for="">Password</label>
-              <input type="password" #password class="form-control" [(ngModel)]="createLoginModel.password"  name="password" required value="123asd">
+              <input type="password" #password class="form-control" [(ngModel)]="createLoginModel.password"  name="password" required>
+              @if (password.type==="password") {
+                  <i class="fa-solid fa-eye eye" (click)="showOrHidePassword($event)"></i>
+              }@else {
+                  <i class="fa-solid fa-eye-slash eye" (click)="showOrHidePassword($event)"></i>
+              }
               
               <div class="mt-2" style="display: flex; align-items: center;">
                 <p class="mb-0" style="flex: 1;">Hesabınız yok mu</p> 
                 
                 <a href="#" data-bs-toggle="modal" data-bs-target="#registerTrip">Hesap oluştur</a>
               </div>
-              <div class="invalid-feedback"></div>
-              @if (password.type==="password") {
-                  <i class="fa-solid fa-eye eye" (click)="showOrHidePassword($event)"></i>
-              }@else {
-                  <i class="fa-solid fa-eye-slash eye" (click)="showOrHidePassword($event)"></i>
-              }
+            
           </div>
           <div class="form-group mt-2">
-              <button type="submit" class="btn btn-dark w-100">
+              <button  type="submit" class="btn btn-dark w-100">
                   <i class="fa-solid fa-lock me-1"></i>
                   Sign In
               </button>
@@ -117,8 +127,8 @@
           </div>
           <div class="form-group mt-2 position-relative">
               <label for="">Password</label>
-              <input type="password" #password class="form-control" [(ngModel)]="createUserModel.password"   name="RegisterPassword" required value="123asd">
-              @if (password.type==="password") {
+              <input type="password" #password2 class="form-control" [(ngModel)]="createUserModel.password"   name="RegisterPassword" required value="123asd">
+              @if (password2.type==="password") {
                 <i class="fa-solid fa-eye eye" (click)="showOrHidePassword($event)"></i>
             }@else {
                 <i class="fa-solid fa-eye-slash eye" (click)="showOrHidePassword($event)"></i>
@@ -126,11 +136,11 @@
           </div>
           <div class="form-group mt-2 position-relative">
               <label class="mt-2" for="">Password Retry</label>
-              <input type="password" #password class="form-control" [(ngModel)]="createUserModel.passwordCheck"  name="RegisterPasswordRetry" required value="123asd">
-              @if (password.type==="password") {
-                <i class="fa-solid fa-eye eye" (click)="showOrHidePassword($event)"></i>
+              <input type="password" #password3 class="form-control" [(ngModel)]="createUserModel.passwordCheck"  name="RegisterPasswordRetry" required value="123asd">
+              @if (password3.type==="password") {
+                <i class="fa-solid fa-eye eye" style="margin-top: 9px;" (click)="showOrHidePassword($event)"></i>
             }@else {
-                <i class="fa-solid fa-eye-slash eye" (click)="showOrHidePassword($event)"></i>
+                <i class="fa-solid fa-eye-slash eye" style="margin-top: 9px;" (click)="showOrHidePassword($event)"></i>
             }
           </div>
               <div class="mt-2" style="display: flex; align-items: center;">
@@ -284,7 +294,7 @@
    <div id="CardContain" class="w-100  container mt-5">
     @for (trip of tripModel; track trip) {
 
-      <div class="card" style="width: auto; ">
+      <div class="card" style="width: 100%; ">
         <div class="card-main">
             <div class="card-left">     
                
@@ -383,8 +393,8 @@
                   <div class="add-comment mt-2">
                      <div class="card card-body">
                       <h5>Leave A comment</h5>
-                      <textarea class="form-control" name="comment" rows="2" style="resize: none;" ></textarea>
-                      <button class="btn btn-secondary mt-2 w-100">Send Command</button>
+                      <textarea class="form-control" name="comment" (click)="OpenLoginModal()" rows="2" style="resize: none;" ></textarea>
+                      <button (click)="activeUser ? sendCommand() :OpenLoginModal() " class="btn btn-secondary mt-2 w-100">Send Command</button>
                      </div>
                   </div>
                 </div>

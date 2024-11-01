@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, viewChild, ViewChild, ViewChildren } from '@angular/core';
 import { Form, FormsModule, NgForm } from '@angular/forms';
 import { createTripModel } from '../../models/create-trip.model';
 import { HttpService } from '../../services/http.service';
@@ -12,6 +12,8 @@ import { UpdateTripContentModel } from '../../models/update-trip-content.model';
 import { SwalService } from '../../services/swal.service';
 import { CreateUserModel } from '../../models/create-user.model';
 import { LoginModel } from '../../models/Login-model';
+import { UserModel } from '../../models/user.model';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -33,10 +35,11 @@ export class HomeComponent implements OnInit {
   maxTripCounter:number=10;
   imagePreview:string | ArrayBuffer | null="";
   updateImagePreview:string | ArrayBuffer | null="";
+  activeUser:null|UserModel=new UserModel;
 
 tripContent:number[]=[]
 
-test:boolean=true;
+
 
   
   updateTripCounter:number=1;
@@ -45,7 +48,8 @@ test:boolean=true;
 
   constructor(
     private http:HttpService,
-    private swal:SwalService
+    private swal:SwalService,
+    private auth:AuthService
   ) {
   }
 
@@ -53,9 +57,11 @@ test:boolean=true;
   @ViewChildren(TripContentComponent) tripContentComponent!: QueryList<TripContentComponent> 
   @ViewChild("closebtn") closebtn: ElementRef<HTMLButtonElement> | undefined
   @ViewChild("password") password : ElementRef<HTMLInputElement> | undefined;
+  @ViewChild("loginModal") loginModal: ElementRef<HTMLButtonElement> | undefined;
 
 
   tripModel:TripModel[]=[]
+  
   
 
   previewImage(file:File,type:boolean){
@@ -123,24 +129,22 @@ this.createTripModel.tripContents= allTripContent;
 
     Login(form:NgForm){
       if(form.valid){
-
         this.http.post("Auth/Login",this.createLoginModel,(res)=>{
-
           this.swal.callToast("hoş geldiniz","success")
         localStorage.setItem("token",res.data?.token)
+        this.activeUser=this.auth.isAuthenticated()
         })
       }
+    }
+
+    Logout(){
+      localStorage.removeItem("token");
+      this.activeUser=null;
     }
   
 
 
- changeTest(){
-  if(this.test){
-    this.test=false;
-  }else{
-    this.test=true;
-  }
- }
+
 
   GetAll(){
     
@@ -153,7 +157,10 @@ this.createTripModel.tripContents= allTripContent;
 
 
 ngOnInit(): void {
+this.activeUser = this.auth.isAuthenticated()
 this.GetAll();
+
+
 }
 
   
@@ -183,7 +190,17 @@ this.GetAll();
     }
   }  
 
+  OpenLoginModal(){
+    if(!this.activeUser){
+      this.swal.callToast("Yorum atmak için giriş yapmalısınız","warning")
+      this.loginModal?.nativeElement.click();
+    }
 
+  }
+
+  sendCommand(){
+
+  }
 
   addTripParts(){
    if(this.tripContent.length < this.tripCounter){
@@ -302,11 +319,8 @@ showOrHidePassword(event:Event){
   else{
     password.type="password";
   }
-
-
-
-
   }
+
   label:boolean=true;
   textChange(event:Event){
    const labelel=event.target as HTMLLabelElement
@@ -320,6 +334,8 @@ showOrHidePassword(event:Event){
   this.label=!this.label;
    }
  
+
+
 
 }
 
