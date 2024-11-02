@@ -55,7 +55,7 @@ tripContent:number[]=[]
 
   @ViewChildren(TripContentComponent) updatetripContentComponent!: QueryList<TripContentComponent> 
   @ViewChildren(TripContentComponent) tripContentComponent!: QueryList<TripContentComponent> 
-  @ViewChild("closebtn") closebtn: ElementRef<HTMLButtonElement> | undefined
+  @ViewChild("closebtn") closebtn: ElementRef<HTMLButtonElement> | undefined;
   @ViewChild("password") password : ElementRef<HTMLInputElement> | undefined;
   @ViewChild("loginModal") loginModal: ElementRef<HTMLButtonElement> | undefined;
 

@@ -20,5 +20,8 @@ namespace TripLogServer.Domain.Entities
         public DateTime CreatedDate { get; set; }
         public ICollection<Tag>? Tags { get; set; }
         public ICollection<TripContent>? TripContents { get; set; }
+        public ICollection<Command>? Commands { get; set; }
+        public AppUser? AppUser { get; set; }
+        public string? AppUserId { get; set; }
     }
 }

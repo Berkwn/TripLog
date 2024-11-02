@@ -15,7 +15,7 @@ namespace TripLogServer.Infrastructure.Context
        DbSet<TripEntity> Trips { get; set; }
         DbSet<Tag> Tags { get; set; }
         DbSet<TripContent> Contents { get; set; }
-
+        DbSet<Command> commands { get; set; }
         DbSet<AppUser> appUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
