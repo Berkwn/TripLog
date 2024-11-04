@@ -14,6 +14,7 @@ import { CreateUserModel } from '../../models/create-user.model';
 import { LoginModel } from '../../models/Login-model';
 import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
+import { CreateComment } from '../../models/create-comment.model';
 
 
 @Component({
@@ -94,6 +95,7 @@ this.createTripModel.tripContents= allTripContent;
     Formdata.append("description",this.createTripModel.description)
     Formdata.append("image",this.createTripModel.image)
     Formdata.append("tags",this.createTripModel.tags)
+    Formdata.append("appUserId",this.activeUser!.id);
 
     this.createTripModel.tripContents?.forEach((content, index) => {
       Formdata.append(`tripContent[${index}].title`, content.title);
@@ -198,9 +200,30 @@ this.GetAll();
 
   }
 
-  sendCommand(){
+  
+  createComment:CreateComment=new CreateComment();
+  sendCommand(form:NgForm,tripId:string){
+    if(!this.activeUser){
+      this.OpenLoginModal();
+    }
+    if(form.valid){
+      debugger
+      this.createComment.tripId=tripId;
+      this.createComment.appUserId=this.activeUser!.id
+      this.http.post("Comment/Create", this.createComment,(res)=>{
+        this.createComment=new CreateComment();
+      this.http.post("Comment/GetAllComments",{tripId}, comment=>{
+        if(comment.data){
+          const trip =this.tripModel.find(t=>t.id==tripId);
+          trip!.comments=[...comment.data]
+        };
+      })
+      })
+    }
 
   }
+
+
 
   addTripParts(){
    if(this.tripContent.length < this.tripCounter){

@@ -9,5 +9,5 @@ using TS.Result;
 
 namespace TripLogServer.Application.Features.Trips.GetAllTrip
 {
-    public sealed record GetAllTripQuery() :IRequest<Result<List<TripEntity>>>;
+    public sealed record GetAllTripQuery() :IRequest<Result<List<GetAllTripResponse>>>;
 }

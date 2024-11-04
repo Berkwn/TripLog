@@ -7,6 +7,7 @@ using TripLogServer.Domain.Entities;
 using TripLogServer.Domain.Repositories;
 using TripLogServer.Infrastructure.Abstractions;
 using TripLogServer.Infrastructure.Context;
+using TripLogServer.Infrastructure.Repositories;
 using TripLogServer.Infrastructure.Services;
 
 namespace TripLogServer.Infrastructure
@@ -39,6 +40,7 @@ namespace TripLogServer.Infrastructure
             services.AddScoped<ITripContentRepository, TripContentRepository>();
             services.AddScoped<IFileStorageService, FileStorageService>();
             services.AddScoped<IJwtProvider, JwtProvider>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
           
 
             return services;

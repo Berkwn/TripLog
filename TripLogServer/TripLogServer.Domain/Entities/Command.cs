@@ -17,7 +17,7 @@ namespace TripLogServer.Domain.Entities
         public AppUser? AppUser { get; set; }
         public string AppUserId { get; set; } = default!;
         public TripEntity? TripEntity { get; set; }
-        public Guid TripId { get; set; }
+        public Guid TripEntityId { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string Description { get; set; } = default!;
 

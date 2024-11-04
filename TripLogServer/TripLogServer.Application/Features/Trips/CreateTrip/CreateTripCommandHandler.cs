@@ -62,6 +62,7 @@ namespace TripLogServer.Application.Features.Trips.CreateTrip
             {
                 Title = request.title,
                 Description = request.Description,
+                AppUserId = request.AppUserId,
                 Tags = triptags,
                 ImageUrl = ImageUrl,
                 TripContents = tripContents

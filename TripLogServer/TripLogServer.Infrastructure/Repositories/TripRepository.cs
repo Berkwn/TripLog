@@ -34,6 +34,7 @@ namespace TripLogServer.Infrastructure.Abstractions
                  Description=x.Description,
                  ImageUrl = x.ImageUrl,
                  CreatedDate=x.CreatedDate,
+                 AppUserId=x.AppUserId,
                 Tags = x.Tags.Select(x=> new Tag
                 {
                      Id= x.Id,
@@ -48,6 +49,10 @@ namespace TripLogServer.Infrastructure.Abstractions
                      ImageUrl=x.ImageUrl,
                      
                  }).ToList(),
+
+                 AppUser=x.AppUser,
+                 Commands=x.Commands,
+
             }
              
             ).AsQueryable();

@@ -10,6 +10,7 @@ namespace TripLogServer.Application.Features.Trip.CreateTrip
         string Description,
         IFormFile Image,
         string Tags,
+        string AppUserId,
         List<TripContentCommand> tripContent
         ): IRequest<Result<string>>;
     
